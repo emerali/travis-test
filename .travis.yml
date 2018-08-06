@@ -7,6 +7,9 @@ git:
 
 python:
   - '3.6'
+
+install:
+  - pip install invoke
   
 script:
   - history | grep "git checkout -qf "
