@@ -1,0 +1,13 @@
+dist: trusty
+sudo: false
+language: python
+
+git:
+  depth: false
+
+python:
+  - '3.6'
+  
+script:
+  - history | grep "git checkout -qf "
+
