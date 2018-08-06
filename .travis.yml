@@ -12,5 +12,6 @@ install:
   - pip install invoke
   
 script:
-  - history
+  - git rev-parse HEAD
+  - git rev-parse --verify HEAD
 
