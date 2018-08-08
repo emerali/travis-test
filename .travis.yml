@@ -11,20 +11,23 @@ python:
 install:
   - pip install invoke
   
-script:
-  - git rev-parse HEAD
-  - git rev-parse --verify HEAD
-  - touch test.foobar
-  - git config --global user.email "deploy@travis-ci.org"
-  - git config --global user.name "Deployment Bot"
-  - MAIN_DIR=`pwd`
-  - cd ..
-  - REPO=https://${GH_KEY:-git}@github.com/emerali/travis-test.git
-  - PUSHING_DIR=./output_repo
-  - git clone --depth 1 "$REPO" $PUSHING &> /dev/null
-  - rsync -r --exclude=.git --delete $MAIN_DIR/ $PUSHING_DIR/
-  - cd $PUSHING_DIR
-  - git add -A
-  - git commit -m "Add test.foobar"
-  - git push origin HEAD:master
-
+stages:
+  - name: deploy
+    script:
+      - git rev-parse HEAD
+      - git rev-parse --verify HEAD
+      - touch test.foobar
+      - git config --global user.email "deploy@travis-ci.org"
+      - git config --global user.name "Deployment Bot"
+      - MAIN_DIR=`pwd`
+      - cd ..
+      - REPO=https://${GH_KEY:-git}@github.com/emerali/travis-test.git
+      - PUSHING_DIR=./output_repo
+      - git clone --depth 1 "$REPO" $PUSHING &> /dev/null
+      - rsync -r --delete $MAIN_DIR/ $PUSHING_DIR/
+      - cd $PUSHING_DIR
+      - git checkout test_branch
+      - git add -A
+      - git commit -m "Add test.foobar"
+      - git push origin HEAD:test_branch
+    if: branch = master 
