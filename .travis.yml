@@ -17,5 +17,5 @@ script:
   - touch test.foobar
   - git add -A
   - git commit -m "Add test.foobar"
-  - git push
+  - git push origin HEAD:master
 
