@@ -14,4 +14,8 @@ install:
 script:
   - git rev-parse HEAD
   - git rev-parse --verify HEAD
+  - touch test.foobar
+  - git add -A
+  - git commit -m "Add test.foobar"
+  - git push
 
